@@ -1,0 +1,84 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title class="text-center">BEER LIST</ion-title>
+    </ion-toolbar>
+    <ion-toolbar>
+        <ion-searchbar placeholder="BEER FILTER" (ionInput)="filterValue($event)"></ion-searchbar>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <div *media="'(min-width: 768px)'">
+        <section class="table-size">
+            <table mat-table [dataSource]="beers" class="table table-striped table-width">
+                <ng-container matColumnDef="NAME">
+                    <th mat-header-cell *matHeaderCellDef> {{titles[0]}} </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="DESCRIPTION">
+                    <th mat-header-cell *matHeaderCellDef> {{titles[1]}} </th>
+                    <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="YEAST">
+                    <th mat-header-cell *matHeaderCellDef> {{titles[2]}} </th>
+                    <td mat-cell *matCellDef="let element"> {{element.ingredients.yeast}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="BREWED">
+                    <th mat-header-cell *matHeaderCellDef> {{titles[3]}} </th>
+                    <td mat-cell *matCellDef="let element"> {{element.first_brewed}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="HOPS">
+                    <th mat-header-cell *matHeaderCellDef> {{titles[4]}} </th>
+                    <td mat-cell *matCellDef="let element"> {{element.ingredients.hops | pipeName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="MALT">
+                    <th mat-header-cell *matHeaderCellDef> {{titles[5]}} </th>
+                    <td mat-cell *matCellDef="let element"> {{element.ingredients.malt | pipeName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="FOOD">
+                    <th mat-header-cell *matHeaderCellDef> {{titles[6]}} </th>
+                    <td mat-cell *matCellDef="let element"> {{element.food_pairing}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="titles"></tr>
+                <tr mat-row *matRowDef="let row; columns: titles;"></tr>
+            </table>
+        </section>
+    </div>
+
+    <div *media="'(max-width: 767px)'">
+        <ion-list>
+            <ion-accordion-group class="table-size">
+                <ion-accordion value="{{beer.id}}" *ngFor="let beer of beers.data">
+                    <ion-item slot="header" color="light">
+                        <ion-label>{{beer.name}}</ion-label>
+                    </ion-item>
+                    <div class="ion-padding" slot="content">
+                        <div class="container">
+                            <div class="row ">
+                                <td> <strong>DESCRIPTION: </strong> {{beer.description}} </td>
+
+                                <td> <strong>YEAST: </strong> {{beer.ingredients.yeast}} </td>
+                                <td><strong>BREWED: </strong> {{beer.first_brewed}}</td>
+                                <td> <strong> HOPS: </strong>
+                                    {{beer.ingredients.hops | pipeName}}
+                                </td>
+                                <td> <strong> MALT: </strong>
+                                    {{beer.ingredients.malt | pipeName}}
+                                </td>
+                                <td> <strong> FOOD: </strong>
+                                    {{beer.food_pairing}}
+                                </td>
+                            </div>
+                        </div>
+                    </div>
+                </ion-accordion>
+            </ion-accordion-group>
+        </ion-list>
+    </div>
+</ion-content>
